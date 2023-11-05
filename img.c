@@ -6,9 +6,8 @@ typedef unsigned int uint;
 
 #define SCREENSIZE  1400
 
-// change the lines between comments to apply the software to your preferrences and hardware
+// change this first lines to apply the software to your hardware or preferences
 #define filename "lena_color.bmp"
-
 // HOW MANY CHARACTERS ARE OR A FEW LESS TO FILL ONE LINE IN YOUR CONSOLE WINDOW AT FULL SCREEN 
 #define NUMBER_OF_CHARS_IN_ONE_LINE 160
 
