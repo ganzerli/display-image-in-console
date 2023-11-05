@@ -11,12 +11,12 @@ typedef unsigned int uint;
 // HOW MANY CHARACTERS ARE OR A FEW LESS TO FILL ONE LINE IN YOUR CONSOLE WINDOW AT FULL SCREEN 
 #define NUMBER_OF_CHARS_IN_ONE_LINE 160
 
-void main(int argc, char const *argv[]){
+void main(){
     byte img_header[54];
-    FILE* fp = fopen(filename, "rb");               //read the file
+    FILE* fp = fopen(filename, "rb");                       //read the file
     fread(img_header, sizeof(unsigned char), 54, fp);       // read the 54-byte from fp to imageHeader
 
-    // get info from butmap
+    // get info from bitmap
     uint width = *(uint*)&img_header[18];
     uint height = *(uint*)&img_header[22];
     uint bitDepth = *(uint*)&img_header[28];
@@ -28,14 +28,13 @@ void main(int argc, char const *argv[]){
 
     // output file..
     FILE *fo = fopen("greyscale.bmp", "wb");
-
-    fwrite(img_header, sizeof(unsigned char), 54, fo); // write the header back.
+    fwrite(img_header, sizeof(unsigned char), 54, fo);                          // write the header back.
     if(bitDepth <= 8) fwrite(color_table, sizeof(unsigned char), 1024, fo);     // write the color table back
 
     byte y = 0;
     uint size = width * height;
     byte buffer[size][3];
-    // *
+    // used only specifically for the char-image
     byte rgb_img[size];
 
     for( uint i = 0 ; i < size ; i++ ){
@@ -54,18 +53,14 @@ void main(int argc, char const *argv[]){
     fclose(fp);
     fclose(fo);
 
-
     // Until that was taken from a tutorial in internet found at https://abhijitnathwani.github.io/blog/
-
     // Now there are few problems to convert a greyscale image in charachters image...
-
     // Problem 1. Getting a char scale to replace the greyscale
     char gradient[12] = { ' ','.',',','-',':','+','*','o','$','%','&','@' };
 
     // Needed is a way to convert the darkness in the char scale
     // Darkest rgb is 0 , and darkest gradient is also at index 0.
     // Lightest rgb is 255 and lightest char is at index 12,
-
     // If rgb was 100 the lightest and the char scale was 10, then with about 100/10 is found the index
     // If rgb was 200 then 10 is appearing 20 times in 200.. so 200/10 = 20 , 20/10 = 2
     // A formula found could be 200 / 10 = 20 , 20 / 10 = 2. So 10*2 is 20, then to find the index is 200 / (200/indexes in gradient: 10)
@@ -87,7 +82,6 @@ void main(int argc, char const *argv[]){
         float fid = rgv / ( RGB / indexes );                                        // a float index
         // from rgb 0 to 21.25 , we need to have indx 0..
         // from 21.25 to 42.50 index 1.. and so on..
-
         // not having any matematician collegue at GLS storage nor building foritures xor at home, to center the probailities the most lazy solution is to add 0.5 to the result and cast int.
         // or add 21.24 / 2
         // but trying a lot of rgbtochi(10) to (255) the best solution was fid + fid/21.24 
@@ -97,7 +91,6 @@ void main(int argc, char const *argv[]){
         //printf("%u\n" , index );
         return index;
     }
-
     // this is the test
     rgbtochi(10);
     rgbtochi(20);
@@ -124,7 +117,6 @@ void main(int argc, char const *argv[]){
     // So if a char is 16px can be that for y a line takes about 20px
     // if the image width was 1520px and not 512 was 1520 / 512 times bigger: 2.96875 oh no a float!
     // Height will be scrolled
-
     // But not everyone has a 1520px screen so that can be 1400 or as SCREENSIZE
     float screen = SCREENSIZE;
     float image_ratio = screen / width;                             // width is from the bitmap
@@ -132,19 +124,17 @@ void main(int argc, char const *argv[]){
 
     // I could not find an equation for my screen and pixels, so i have counted 170 chars fitting int the terminal wikndow @14 or 16px
     float char_in_widht = NUMBER_OF_CHARS_IN_ONE_LINE;
-
     // If the image was 1400px wide and 170 chars are filling the width then 1400/170 ,to do is take a pixel to translate every 8.23px
     float px_distance_in_screen = ( screen / char_in_widht) ;
     printf("%f\n" , px_distance_in_screen);                         // 8.23
 
     // NEEDED IS: TAKE FROM 0 TO width RGB OF EVERY 8.23 / image_ratio px
     printf("%f\n" ,px_distance_in_screen * char_in_widht);          // 1400
-
     // and apply the relation to the size of the image choosen
     float px_distance_in_img = px_distance_in_screen / image_ratio; // 3.2 in this case
     printf("translating rgb every %f pixels\n", px_distance_in_img );
 
-    // it may be endianity or something strange.. but in my pc the img_buffer needs to be turned
+    // it may be endianity or something strange.. but in my pc the img_buffer is the other way around
     byte rgb_img_[size];
     uint i_ = 0;
     // resolving endianity , if your computer prints the image upside down comment the 4 lines underneath
