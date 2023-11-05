@@ -85,13 +85,13 @@ void main(int argc, char const *argv[]){
     int rgbtochi(byte rgbvalue){
         float rgv = (float)rgbvalue;                                                // having a float
         float fid = rgv / ( RGB / indexes );                                        // a float index
-        // from rgc 0 to 21.25 , we need to have indx 0..
+        // from rgb 0 to 21.25 , we need to have indx 0..
         // from 21.25 to 42.50 index 1.. and so on..
 
         // not having any matematician collegue at GLS storage nor building foritures xor at home, to center the probailities the most lazy solution is to add 0.5 to the result and cast int.
         // or add 21.24 / 2
-        // but triyng a lot of rgbtochi(10) to (255) the best solution was fid + fid/21.24 
-        float fi = fid + fid / 21.25 ;                                              // that was me.. that is the math behind that 255 / (255/12) = 21.25 , 255 / 21.25 = 12
+        // but trying a lot of rgbtochi(10) to (255) the best solution was fid + fid/21.24 
+        float fi = fid + fid / 21.25 ;                                              // that was me.. and the math behind that is 255 / (255/12) = 21.25 , 255 / 21.25 = 12
         //printf("%f\n" ,fi);        
         uint index = (int)fi;
         //printf("%u\n" , index );
@@ -120,19 +120,17 @@ void main(int argc, char const *argv[]){
 
     // Now there is another problem, and is to solve not to bring to the disco manipulate it and speak it out. Ops.. i did it again...
     // And is to standardize the output size of the image in a world made with different image sizes, and the bmp format made from windows, and also other things.
-
     // Until now the project works only in my 1520 px screen.
-    // So if a char is 16px can be that for y a line takes about 20 px
-
+    // So if a char is 16px can be that for y a line takes about 20px
     // if the image width was 1520px and not 512 was 1520 / 512 times bigger: 2.96875 oh no a float!
     // Height will be scrolled
 
-    // But not everyone has a 1520 px screen so that can be 1400 or as SCREENSIZE
+    // But not everyone has a 1520px screen so that can be 1400 or as SCREENSIZE
     float screen = SCREENSIZE;
-    float image_ratio = screen / width;
+    float image_ratio = screen / width;                             // width is from the bitmap
     printf("%f\n" , width * image_ratio);                           // 1400.0
 
-    // I could not find an equation for my screen and pixels, so i have counted 170 chars fitting int the terminal wikndow @ 14 or 16px
+    // I could not find an equation for my screen and pixels, so i have counted 170 chars fitting int the terminal wikndow @14 or 16px
     float char_in_widht = NUMBER_OF_CHARS_IN_ONE_LINE;
 
     // If the image was 1400px wide and 170 chars are filling the width then 1400/170 ,to do is take a pixel to translate every 8.23px
@@ -143,13 +141,13 @@ void main(int argc, char const *argv[]){
     printf("%f\n" ,px_distance_in_screen * char_in_widht);          // 1400
 
     // and apply the relation to the size of the image choosen
-    float px_distance_in_img = px_distance_in_screen / image_ratio;
+    float px_distance_in_img = px_distance_in_screen / image_ratio; // 3.2 in this case
     printf("translating rgb every %f pixels\n", px_distance_in_img );
 
     // it may be endianity or something strange.. but in my pc the img_buffer needs to be turned
     byte rgb_img_[size];
     uint i_ = 0;
-    // resolving endianity , if your computer prints something upside down comment the 4 lines underneath
+    // resolving endianity , if your computer prints the image upside down comment the 4 lines underneath
     for (uint i = size; i > 0; i--){
         rgb_img_[i_] = rgb_img[i];
         i_++;
