@@ -22,7 +22,7 @@ void main(){
     uint bitDepth = *(uint*)&img_header[28];
 
     // read COLOR TABLE if present
-    byte* color_table[1024];
+    byte color_table[1024];
 
     if(bitDepth <= 8)fread(color_table, sizeof(unsigned char), 1024, fp);       // read the 1024-byte from fp to colorTable
 
