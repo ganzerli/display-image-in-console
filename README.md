@@ -1,4 +1,7 @@
 # display-image-in-console
+-- WARNING -- .bmp formats are also not all the same, you need to match exactly the kind of .bmp of the image same as the image here. 256 colors and other stuff...
+
+
 Having an image in .bmp format, display it in console made with characters.
 Compile gcc with: gcc -o img img.c
 
