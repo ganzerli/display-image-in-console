@@ -1,5 +1,5 @@
 # display-image-in-console
--- WARNING -- .bmp format must be at 24-bits colors, or it does not work, to convert it is needed to set the colors at 24 bits
+-- WARNING -- .bmp format must be at 24-bits colors, or it does not work, to convert it is needed to set the colors at 24 bits, there is also something about bmp format and endianity and or width, then it works at best if the image is a square, width = height.
 
 
 Having an image in .bmp format, display it in console made with characters.
