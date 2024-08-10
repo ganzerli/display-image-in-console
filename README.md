@@ -1,5 +1,5 @@
 # display-image-in-console
--- WARNING -- .bmp formats are also not all the same, you need to match exactly the kind of .bmp of the image same as the image here. 256 colors and other stuff...
+-- WARNING -- .bmp format must be at 24-bits colors, or it does not work, to convert it is needed to set the colors at 24 bits
 
 
 Having an image in .bmp format, display it in console made with characters.
