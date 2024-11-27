@@ -1,5 +1,6 @@
 # display-image-in-console
 ----> Output example for this image is in image.txt <----
+
 -- WARNING -- .bmp format must be at 24-bits colors, or it does not work, to convert it is needed to set the colors at 24 bits, there is also something about bmp format and endianity and or width, then it works at best if the image is a square, width = height. In any case something dipending from -> idx = (int) i*width + j;
 
 -- DESCRIPTION --
